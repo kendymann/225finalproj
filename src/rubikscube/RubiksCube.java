@@ -1,6 +1,7 @@
 package rubikscube;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class RubiksCube {
 
@@ -164,7 +165,7 @@ public class RubiksCube {
         rotate4(new int[]{LEFT, 2, 0}, new int[]{FRONT, 2, 0}, new int[]{RIGHT, 2, 0}, new int[]{BACK, 2, 0});
         rotate4(new int[]{LEFT, 2, 1}, new int[]{FRONT, 2, 1}, new int[]{RIGHT, 2, 1}, new int[]{BACK, 2, 1});
         rotate4(new int[]{LEFT, 2, 2}, new int[]{FRONT, 2, 2}, new int[]{RIGHT, 2, 2}, new int[]{BACK, 2, 2});
-    }
+    }   
 
     // Our scouting methods to essentially create the graph as we do a move
     public RubiksCube getNeighborF() {
