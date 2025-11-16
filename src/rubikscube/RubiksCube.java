@@ -47,7 +47,7 @@ public class RubiksCube {
     }
 
     public RubiksCube(RubiksCube other) {
-        // 1. Create a new, empty 6x3x3 array
+        // Create a new, empty 6x3x3 array
         this.state = new char[6][3][3];
 
         for (int face = 0; face < 6; face++) {
@@ -56,8 +56,6 @@ public class RubiksCube {
             }
         }
     }
-
-
 
     /**
      * Checks that the color is good
@@ -264,6 +262,19 @@ public class RubiksCube {
         return sb.toString();
     }
 
+    @Override 
+    public boolean equals(Object obj) {
+        if( this == obj ) return true;
+        if( obj == null || getClass() != obj.getClass()) return false;
+        RubiksCube that = (RubiksCube) obj;
+        return Arrays.deepEquals(this.state, that.state);
+    }
+
+    @Override
+    public int hashcode() {
+        return Arrays.deepHashCode(this.state);
+    }
+
     /**
      *
      * @param moves
@@ -283,4 +294,6 @@ public class RubiksCube {
     public static void main(String[] args) {
         System.out.println(RubiksCube.order("RU"));
     }
+
+
 }
