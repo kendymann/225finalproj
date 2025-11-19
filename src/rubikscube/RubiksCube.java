@@ -271,7 +271,7 @@ public class RubiksCube {
     }
 
     @Override
-    public int hashcode() {
+    public int hashCode() {
         return Arrays.deepHashCode(this.state);
     }
 
