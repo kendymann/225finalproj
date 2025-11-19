@@ -1,5 +1,5 @@
 package rubikscube;
-// This is a test
+
 import java.lang.invoke.MethodHandles;
 
 public class Solver {
@@ -21,5 +21,27 @@ public class Solver {
 		// solve...
 		//File output = new File(args[1]);
 
+	}
+	private static class SearchNode implements Comparable<SearchNode> {
+		
+		int Cost; // F = G + H
+		int DistFromStart; // G
+		int Heuristic; // H
+		RubiksCube CurrState; // This is state of the cube
+		String path; // Stores the instructions that it took to get to this specific state
+
+		public SearchNode( int DistFromStart, int Heuristic, RubiksCube Curr_State, String path){
+			this.DistFromStart = DistFromStart;
+			this.Heuristic = Heuristic;
+			this.CurrState = Curr_State;
+			this.path = path;
+			Cost = DistFromStart + Heuristic;
+		}
+
+		public int compareTo( SearchNode other ){
+			if( this.Cost > other.Cost ) return 1; // The 1 represents true that our cost is greater than the other cost
+			else if ( this.Cost < other.Cost ) return -1; // The -1 represents that the other cost function is greater than this cost
+			else return 0; // The zero represents equals 
+		}
 	}
 }
