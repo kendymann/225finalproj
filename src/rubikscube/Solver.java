@@ -1,27 +1,12 @@
 package rubikscube;
 
+import java.io.*;
 import java.lang.invoke.MethodHandles;
+import java.util.PriorityQueue;
+
 
 public class Solver {
-	public static void main(String[] args) {
-//		System.out.println("number of arguments: " + args.length);
-//		for (int i = 0; i < args.length; i++) {
-//			System.out.println(args[i]);
-//		}
 
-		if (args.length < 2) {
-			System.out.println("File names are not specified");
-			System.out.println("usage: java " + MethodHandles.lookup().lookupClass().getName() + " input_file output_file");
-			return;
-		}
-		
-		
-		// TODO
-		//File input = new File(args[0]);
-		// solve...
-		//File output = new File(args[1]);
-
-	}
 	private static class SearchNode implements Comparable<SearchNode> {
 		
 		int Cost; // F = G + H
@@ -43,5 +28,65 @@ public class Solver {
 			else if ( this.Cost < other.Cost ) return -1; // The -1 represents that the other cost function is greater than this cost
 			else return 0; // The zero represents equals 
 		}
+	}
+	public static int calculateHeuristic( RubiksCube Cube ){
+		char correctColour = 'W'; // Just set to W to initialize
+        int incorrectNum = 0;
+        for (int i = 0; i < 6; i++) {
+            if (i == 0) correctColour = 'W';
+            if (i == 1) correctColour = 'Y';
+            if (i == 2) correctColour = 'B';
+            if (i == 3) correctColour = 'G';
+            if (i == 4) correctColour = 'O';
+            if (i == 5) correctColour = 'R';
+
+            if (Cube.state[i][0][0] != correctColour) incorrectNum++;
+            if (Cube.state[i][0][2] != correctColour) incorrectNum++;
+            if (Cube.state[i][2][0] != correctColour) incorrectNum++;
+            if (Cube.state[i][2][2] != correctColour) incorrectNum++;
+        }
+        // 9 comes from the maximum number of corners fixed during turn (3) * num of stickers in each corner
+        // Need highest number so we dont overestimate the heuristc
+		// (UPDATE) If you you turn a face of solved cube it displaces 4 corners. 
+		// Each corner has 3 stickers so 4*3 = 12 incorrect ceil(12/9) = 2 should be 1 because we know its only 1 move away
+        return (int)Math.ceil(incorrectNum / 12); // Divide by 12 at max we would be shifting 12 stickers
+	}
+	public static void main(String[] args) throws IOException, IncorrectFormatException {
+//		System.out.println("number of arguments: " + args.length);
+//		for (int i = 0; i < args.length; i++) {
+//			System.out.println(args[i]);
+//		}
+
+		if (args.length < 2) {
+			System.out.println("File names are not specified");
+			System.out.println("usage: java " + MethodHandles.lookup().lookupClass().getName() + " input_file output_file");
+			return;
+		}
+		
+		
+		// TODO
+		//File input = new File(args[0]);
+		String Input_Filename = args[0];
+		RubiksCube StartCube = new RubiksCube( Input_Filename );
+		String StartPath = "";
+		int StartHeuristic = calculateHeuristic( StartCube );
+		
+		PriorityQueue<SearchNode> Queue = new PriorityQueue<>();
+
+		// Init the start node
+		SearchNode StartNode = new SearchNode( 0, StartHeuristic, StartCube, StartPath );
+
+		Queue.add(StartNode);
+
+		while( !Queue.isEmpty() ){
+			SearchNode Current = Queue.poll();
+			for( int i = 0; i < 6; i++ ){
+				
+			}
+		}
+
+		// solve...
+		//File output = new File(args[1]);
+
 	}
 }
