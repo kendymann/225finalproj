@@ -106,6 +106,7 @@ public class Solver {
 						System.out.println("An error occurred while writing to the file: " + e.getMessage());
 						e.printStackTrace();
 					}
+					return;
     			}
 			}
 		}
